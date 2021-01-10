@@ -10,7 +10,20 @@ class Fetcher:
         self.url = new_url
         return None
 
-    def make_http_request(self):
+    def get_html_content(self):
+        import requests
+        response = requests.get(self.get_url())
+
+        if response.status_code != 200:
+            return 'HTTP error - status code '+str(response.status_code)
+        
+        return response.content
+
+    def parse_html_content(self):
+        pass
+
+        
+
 
 
 
@@ -28,4 +41,8 @@ if __name__ == "__main__":
     print(test.get_url())
 
     # Test HTTP request for HTML data response
-    test.make_http_request()
+    test.set_url("https://sfbay.craigslist.org/search/cta?query=4Runner&srchType=T&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009'")
+    test.get_html_content()
+
+    # Test BS4 parser against byte content response
+    test.parse_html_content()
