@@ -20,7 +20,18 @@ class Fetcher:
         return response.content
 
     def parse_html_content(self):
-        pass
+        from bs4 import BeautifulSoup, SoupStrainer
+        temp = self.get_html_content()
+        # soup = BeautifulSoup(temp, 'html.parser', parse_only=SoupStrainer("ul"))
+        soup = BeautifulSoup(temp, 'html.parser')
+        
+        # Craigslist uses an unordered list with the class name "rows" for all of the posting cards.
+        # Within this unordred list, each card is a list item with the class name "result-row".
+        results = soup.find_all("li", class_="result-row")
+
+        for item in results:
+            print(item['data-pid'])
+
 
         
 
@@ -41,7 +52,7 @@ if __name__ == "__main__":
     print(test.get_url())
 
     # Test HTTP request for HTML data response
-    test.set_url("https://sfbay.craigslist.org/search/cta?query=4Runner&srchType=T&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009'")
+    test.set_url("https://sfbay.craigslist.org/search/cta?query=4Runner&srchType=T&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009&auto_drivetrain=3")
     test.get_html_content()
 
     # Test BS4 parser against byte content response
