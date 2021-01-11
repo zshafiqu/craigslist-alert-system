@@ -1,4 +1,4 @@
-class Verify:
+class Verifier:
 
     def __init__(self):
         pass
