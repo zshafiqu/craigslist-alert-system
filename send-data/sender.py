@@ -11,6 +11,22 @@ data = [
             "price":"$76,999",
             "url":"https://sfbay.craigslist.org/sby/ctd/d/sherman-2015-chevrolet-corvette/7259938926.html",
             "thumbnail-url":"https://images.craigslist.org/00u0u_kjVjN7fikt6z_0ak06T_300x300.jpg"
+        },
+                {
+            "post-id":"7259938926",
+            "datetime":"2021-01-10 10:57",
+            "title":"2015 Chevrolet Corvette Stingray Z06",
+            "price":"$76,999",
+            "url":"https://sfbay.craigslist.org/sby/ctd/d/sherman-2015-chevrolet-corvette/7259938926.html",
+            "thumbnail-url":"https://images.craigslist.org/00u0u_kjVjN7fikt6z_0ak06T_300x300.jpg"
+        },
+                {
+            "post-id":"7259938926",
+            "datetime":"2021-01-10 10:57",
+            "title":"2015 Chevrolet Corvette Stingray Z06",
+            "price":"$76,999",
+            "url":"https://sfbay.craigslist.org/sby/ctd/d/sherman-2015-chevrolet-corvette/7259938926.html",
+            "thumbnail-url":"https://images.craigslist.org/00u0u_kjVjN7fikt6z_0ak06T_300x300.jpg"
         }
     ]
 
@@ -20,17 +36,14 @@ receiver_email = os.environ.get('RECEIVER_EMAIL')
 password = os.environ.get('SENDER_PASS')
 
 message = MIMEMultipart("alternative")
-message["Subject"] = "multipart test"
+message["Subject"] = "Craigslist Alert - New Listing(s)!"
 message["From"] = sender_email
 message["To"] = receiver_email
 
 # Create the plain-text and HTML version of your message
-text = """\
-Hi,
-How are you?
-Real Python has many great tutorials:
-www.realpython.com"""
-html = jinja2.Template("""\
+plain_text = """"""
+
+html_message = jinja2.Template("""\
 <html>
   <body>
     <p>Hi,<br>
@@ -52,8 +65,8 @@ html = jinja2.Template("""\
 html = html.render({'data': data})
 
 # Turn these into plain/html MIMEText objects
-part1 = MIMEText(text, "plain")
-part2 = MIMEText(html, "html")
+part1 = MIMEText(plain_text, "plain")
+part2 = MIMEText(html_message, "html")
 
 # Add HTML/plain-text parts to MIMEMultipart message
 # The email client will try to render the last part first
