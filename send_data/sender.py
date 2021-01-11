@@ -13,7 +13,7 @@ class Sender:
 
         # Create message object to be sent in email
         message = MIMEMultipart("alternative")
-        message["Subject"] = "Zain's Craigslist Alerts - New Listing(s)!"
+        message["Subject"] = "Zain's Craigslist Alerts - New Listings!"
         message["From"] = self.sender_email
         message["To"] = self.receiver_email
 
@@ -21,7 +21,7 @@ class Sender:
         email_template = jinja2.Template("""\
             <html>
                 <body>
-                    <h2 style="text-decoration: underline;">New car(s) found. See below.</h2><br>
+                    <h2 style="text-decoration: underline;">{{data|length}} new car(s) found. See below.</h2><br>
             
                     {% for item in data %}
                     <div style="border-style: double; padding: 10px; margin: 5px">
