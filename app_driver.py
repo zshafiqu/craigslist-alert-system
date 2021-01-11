@@ -12,7 +12,7 @@ print(new_data)
 print("\n\n\n")
 
 # Now verify the new data against the existing data
-file_path = "data_store/data_store.json"
+file_path = "data_store.json"
 
 data_verifier = Verifier()
 existing_data = data_verifier.get_data_from_file(file_path)
@@ -36,8 +36,13 @@ sender_email = os.environ.get('SENDER_EMAIL')
 sender_pass = os.environ.get('SENDER_PASS')
 receiver_email = os.environ.get('RECEIVER_EMAIL')
 
-sender = Sender(sender_email, sender_pass, receiver_email)
-sender.send_data(unseen_items)
+if unseen_items != []:
+    print("Sending email now...")
+    sender = Sender(sender_email, sender_pass, receiver_email)
+    sender.send_email(unseen_items)
+
+else:
+    print("No new data.")
 
 
 
