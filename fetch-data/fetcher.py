@@ -28,10 +28,38 @@ class Fetcher:
         # Craigslist uses an unordered list with the class name "rows" for all of the posting cards.
         # Within this unordred list, each card is a list item with the class name "result-row".
         results = soup.find_all("li", class_="result-row")
+        # print(results)
+        return results
 
-        for item in results:
-            print(item['data-pid'])
+    def convert_html_to_json_meta(self):
+        temp = self.parse_html_content()
+        results = []
 
+        print(temp)
+
+        for item in temp:
+            image_ids = item.find(class_="result-image gallery")['data-ids']
+            first_image_id = image_ids.split(',')[0][2:]
+            thumbnail_url = 'https://images.craigslist.org/'+first_image_id+'_300x300.jpg'
+
+            print(thumbnail_url)
+            print('\n\n\n\n\n\n')
+        #     json = {
+        #         "pid" : item['data-pid'],
+        #         "datetime" : item.find(class_="result-date")['datetime'],
+        #         "title" : item.find(class_="result-title hdrlnk").text,
+        #         "price" : item.find(class_="result-price").text,
+        #         "url" : item.find(class_="result-title hdrlnk")['href']
+        #     }
+        #     results.append(json)
+
+        # for item in results:
+        #     print(item)
+        #     print('\n\n')
+        
+        return None
+
+        
 
         
 
@@ -48,7 +76,7 @@ if __name__ == "__main__":
     print(test.get_url())
 
     # Set new URL, print data. It should be empty
-    test.set_url("")
+    # test.set_url("")
     print(test.get_url())
 
     # Test HTTP request for HTML data response
@@ -57,3 +85,6 @@ if __name__ == "__main__":
 
     # Test BS4 parser against byte content response
     test.parse_html_content()
+
+    # Next
+    test.convert_html_to_json_meta()
