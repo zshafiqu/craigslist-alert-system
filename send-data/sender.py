@@ -44,25 +44,25 @@ message["To"] = receiver_email
 plain_text = """"""
 
 html_message = jinja2.Template("""\
-<html>
-  <body>
-    <p>Hi,<br>
-       How are you?<br>
-       <a href="http://www.realpython.com">Real </a> 
-       has many great tutorials.
-    </p>
-    {% for item in data %}
-        {{item['post-id']}}
-        {{item['datetime']}}
-        {{item['title']}}
-        {{item['price']}}
-        {{item['url']}}
-    {% endfor %}
-  </body>
-</html>
+    <html>
+        <body>
+            <h2 style="text-decoration: underline;">New car(s) found. See below.</h2><br>
+    
+            {% for item in data %}
+            <div style="border-style: double; padding: 10px; margin: 5px">
+                <p><b>ID: </b>{{item['post-id']}}</p>
+                <p><b>Date/Time: </b>{{item['datetime']}}</p>
+                <p><b>Title: </b>{{item['title']}}</p>
+                <p><b>Price: </b>{{item['price']}}</p>
+                <a href="{{item['url']}}">Click to see posting</a><br>
+                <img src="{{item['thumbnail-url']}}" alt="Car" style="margin-top: 10px;"> 
+            </div>
+            {% endfor %}
+        </body>
+    </html>
 """)
 
-html = html.render({'data': data})
+html_message = html_message.render({'data': data})
 
 # Turn these into plain/html MIMEText objects
 part1 = MIMEText(plain_text, "plain")
