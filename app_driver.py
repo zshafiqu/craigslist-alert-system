@@ -52,7 +52,7 @@ if __name__ == "__main__":
     ]
 
     for user in users:
-        schedule.every(5).seconds.do(run_script, user['url'], user['email'], user['public_id'])
+        schedule.every(2).minutes.do(run_script, user['url'], user['email'], user['public_id'])
     
     while True:
         schedule.run_pending()
