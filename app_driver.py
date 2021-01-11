@@ -1,44 +1,36 @@
 from fetch_data.fetcher import Fetcher
 from verify_data.verifier import Verifier
 from send_data.sender import Sender
+import os, schedule, time, uuid
 
 
-def run_script(url):
+def run_script(url, receiver_email, public_id):
     # First create a fetcher object to grab the data
     from datetime import datetime
     fetcher = Fetcher(url)
     new_data = fetcher.fetch_data()
-
-    print("Retrieved new data at "+str(datetime.utcnow())+". See below: ")
-    print(new_data)
-    print("\n\n\n")
+    print("--------------------------------------------------")
+    print("Retrieved new response at "+str(datetime.utcnow())+" for "+receiver_email)
+    print("\n\n")
 
     # Now verify the new data against the existing data
-    file_path = "data_store.json"
-
+    file_path = "json_store/"+str(public_id)+".json"
     data_verifier = Verifier()
     existing_data = data_verifier.get_data_from_file(file_path)
-
-    print("Printing existing data: ")
-    print(existing_data)
-    print("\n\n\n")
-
     unseen_items = data_verifier.filter_new_items(existing_data, new_data)
 
-    print("Unseen data, to be emailed if not None: ")
-    print(unseen_items)
-    print("\n\n\n")
-
-    # Write the new data to the existing data-store
-    data_verifier.write_to_json_file(new_data, file_path)
-
-    # and then email the unseen items
-    import os
-    sender_email = os.environ.get('SENDER_EMAIL')
-    sender_pass = os.environ.get('SENDER_PASS')
-    receiver_email = os.environ.get('RECEIVER_EMAIL')
-
     if unseen_items != []:
+        print("Unseen data: ")
+        print(unseen_items)
+        print("\n\n")
+
+        # Write the new data to the existing data-store
+        data_verifier.write_to_json_file(new_data, file_path)
+
+        # and then email the unseen items
+        sender_email = os.environ.get('SENDER_EMAIL')
+        sender_pass = os.environ.get('SENDER_PASS')
+
         print("Sending email now...")
         sender = Sender(sender_email, sender_pass, receiver_email)
         if sender.send_email(unseen_items) != 200:
@@ -47,12 +39,20 @@ def run_script(url):
     else:
         print("No new data.")
 
+    print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    import schedule
-    import time
-    url = "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&hasPic=1&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009&auto_drivetrain=3"
-    schedule.every(0.5).minutes.do(run_script(url))
+
+    users = [
+        {
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "public_id" : str(uuid.uuid4()),
+            "url" : "https://slo.craigslist.org/search/cta?query=4runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=104&nearbyArea=7&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=103&nearbyArea=209&nearbyArea=92&nearbyArea=12&nearbyArea=8&nearbyArea=62&nearbyArea=710&nearbyArea=1&nearbyArea=97&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=500&max_price=8500&min_auto_year=2000&max_auto_year=2009&auto_drivetrain=3&auto_title_status=1"
+        },
+    ]
+
+    for user in users:
+        schedule.every(5).seconds.do(run_script, user['url'], user['email'], user['public_id'])
     
     while True:
         schedule.run_pending()

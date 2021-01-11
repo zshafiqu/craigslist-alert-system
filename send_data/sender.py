@@ -13,7 +13,7 @@ class Sender:
 
         # Create message object to be sent in email
         message = MIMEMultipart("alternative")
-        message["Subject"] = "Craigslist Alert - New Listing(s)!"
+        message["Subject"] = "Zain's Craigslist Alerts - New Listing(s)!"
         message["From"] = self.sender_email
         message["To"] = self.receiver_email
 
