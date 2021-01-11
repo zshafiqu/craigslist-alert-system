@@ -6,10 +6,13 @@ class Verifier:
     def get_data_from_file(self, file_path):
         # Load a JSON file into a Python dictionary that 
         # can live on memory temporarily
-        import json
-        with open(file_path) as f:
-            payload = json.load(f)
-        return payload
+        try:
+            import json
+            with open(file_path) as f:
+                payload = json.load(f)
+            return payload
+        except Exception as e:
+            return []
 
     def filter_new_items(self, existing_data, new_data):
         # Creates a set of the existing items, and then
