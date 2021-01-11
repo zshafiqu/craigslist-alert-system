@@ -3,10 +3,9 @@ from verify_data.verifier import Verifier
 from send_data.sender import Sender
 
 
-def run_script():
+def run_script(url):
     # First create a fetcher object to grab the data
     from datetime import datetime
-    url = "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&hasPic=1&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009&auto_drivetrain=3"
     fetcher = Fetcher(url)
     new_data = fetcher.fetch_data()
 
@@ -50,7 +49,14 @@ def run_script():
 
 
 if __name__ == "__main__":
-    run_script()
+    import schedule
+    import time
+    url = "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&hasPic=1&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009&auto_drivetrain=3"
+    schedule.every(0.5).minutes.do(run_script(url))
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 
