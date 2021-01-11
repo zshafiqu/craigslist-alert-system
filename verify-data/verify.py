@@ -29,6 +29,28 @@ class Verify:
 
         return results
 
+    def write_to_json_file(self, json_data, file_path):
+        import json
+        with open(file_path, "w") as w:
+            json.dump(json_data, w)
+        return None
+
+if __name__ == "__main__":
+    test = Verify()
+
+    old = test.get_data_from_file('old-data.json')
+    new = test.get_data_from_file('new-data.json')
+    temp = test.get_data_from_file("temp.json")
+
+
+    print(test.filter_new_items(new, temp))
+
+    # test.write_to_json_file(new, 'temp.json')
+
+
+
+
+        
     
 
     
