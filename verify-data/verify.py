@@ -30,6 +30,7 @@ class Verify:
         return results
 
     def write_to_json_file(self, json_data, file_path):
+        # Write any Python dict to a JSON file using this interface
         import json
         with open(file_path, "w") as w:
             json.dump(json_data, w)
