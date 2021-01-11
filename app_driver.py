@@ -6,17 +6,26 @@ from send_data.sender import Sender
 url = "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&hasPic=1&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009&auto_drivetrain=3"
 fetcher = Fetcher(url)
 new_data = fetcher.fetch_data()
+
+print("Retrieved new data: ")
 print(new_data)
+print("\n\n\n")
 
 # Now verify the new data against the existing data
 file_path = "data_store/data_store.json"
 
 data_verifier = Verifier()
 existing_data = data_verifier.get_data_from_file(file_path)
+
+print("Printing existing data: ")
 print(existing_data)
+print("\n\n\n")
 
 unseen_items = data_verifier.filter_new_items(existing_data, new_data)
+
+print("Unseen data, to be emailed: ")
 print(unseen_items)
+print("\n\n\n")
 
 # Write the new data to the existing data-store
 data_verifier.write_to_json_file(new_data, file_path)
