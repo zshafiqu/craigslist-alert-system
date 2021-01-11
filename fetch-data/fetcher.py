@@ -6,10 +6,6 @@ class Fetcher:
     def get_url(self):
         return self.url
 
-    def set_url(self, new_url):
-        self.url = new_url
-        return None
-
     def get_html_content(self):
         import requests
         response = requests.get(self.get_url())
@@ -19,25 +15,21 @@ class Fetcher:
         
         return response.content
 
-    def parse_html_content(self):
+    def parse_html_content(self, html_byte_content):
         from bs4 import BeautifulSoup, SoupStrainer
-        temp = self.get_html_content()
-        # soup = BeautifulSoup(temp, 'html.parser', parse_only=SoupStrainer("ul"))
-        soup = BeautifulSoup(temp, 'html.parser')
+        soup = BeautifulSoup(html_byte_content, 'html.parser')
         
         # Craigslist uses an unordered list with the class name "rows" for all of the posting cards.
         # Within this unordred list, each card is a list item with the class name "result-row".
         results = soup.find_all("li", class_="result-row")
-        # print(results)
         return results
 
-    def convert_html_to_json_meta(self):
+    def convert_html_to_json(self, bs4_object):
         # All we're doing is traversing the 'DOM' object bs4 creates for us to search for data based on class
         # names or attributes, and then piecing these together into a JSON dictionary we can utilize later
-        temp = self.parse_html_content()
         results = []
 
-        for item in temp:
+        for item in bs4_object:
 
             try:
                 image_ids = item.find(class_="result-image gallery")['data-ids']
@@ -59,11 +51,10 @@ class Fetcher:
         
         return results
 
-
-# Test Script -----------------------------------
-if __name__ == "__main__":
-    # Create Fetcher object
-    test = Fetcher('https://sfbay.craigslist.org/d/cars-trucks/search/cta?query=z06&sort=rel')
-    
-    # Next
-    print(test.convert_html_to_json_meta())
+    def fetch_data(self):
+        # Main driver for this class, makes all appropriate method calls
+        # to retrieve data from Craigslist
+        html_response = self.get_html_content()
+        soup_obj = self.parse_html_content(html_response)
+        data = self.convert_html_to_json(soup_obj)
+        return data
