@@ -41,7 +41,7 @@ message["From"] = sender_email
 message["To"] = receiver_email
 
 # Create the plain-text and HTML version of your message
-plain_text = """"""
+# plain_text = """"""
 
 html_message = jinja2.Template("""\
     <html>
@@ -65,12 +65,12 @@ html_message = jinja2.Template("""\
 html_message = html_message.render({'data': data})
 
 # Turn these into plain/html MIMEText objects
-part1 = MIMEText(plain_text, "plain")
+# part1 = MIMEText(plain_text, "plain")
 part2 = MIMEText(html_message, "html")
 
 # Add HTML/plain-text parts to MIMEMultipart message
 # The email client will try to render the last part first
-message.attach(part1)
+# message.attach(part1)
 message.attach(part2)
 
 # Create secure connection with server and send email
