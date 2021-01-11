@@ -32,59 +32,38 @@ class Fetcher:
         return results
 
     def convert_html_to_json_meta(self):
+        # All we're doing is traversing the 'DOM' object bs4 creates for us to search for data based on class
+        # names or attributes, and then piecing these together into a JSON dictionary we can utilize later
         temp = self.parse_html_content()
         results = []
 
-        print(temp)
-
         for item in temp:
-            image_ids = item.find(class_="result-image gallery")['data-ids']
-            first_image_id = image_ids.split(',')[0][2:]
-            thumbnail_url = 'https://images.craigslist.org/'+first_image_id+'_300x300.jpg'
 
-            print(thumbnail_url)
-            print('\n\n\n\n\n\n')
-        #     json = {
-        #         "pid" : item['data-pid'],
-        #         "datetime" : item.find(class_="result-date")['datetime'],
-        #         "title" : item.find(class_="result-title hdrlnk").text,
-        #         "price" : item.find(class_="result-price").text,
-        #         "url" : item.find(class_="result-title hdrlnk")['href']
-        #     }
-        #     results.append(json)
+            try:
+                image_ids = item.find(class_="result-image gallery")['data-ids']
+                first_image_id = image_ids.split(',')[0][2:]
+                thumbnail_url = 'https://images.craigslist.org/'+first_image_id+'_300x300.jpg'
+            except Exception as e:
+                thumbnail_url = ""
 
-        # for item in results:
-        #     print(item)
-        #     print('\n\n')
+            car_data = {
+                "post-id" : item['data-pid'],
+                "datetime" : item.find(class_="result-date")['datetime'],
+                "title" : item.find(class_="result-title hdrlnk").text,
+                "price" : item.find(class_="result-price").text,
+                "url" : item.find(class_="result-title hdrlnk")['href'],
+                "thumbnail-url" : thumbnail_url
+            }
+
+            results.append(car_data)
         
-        return None
-
-        
-
-        
-
-
-
+        return results
 
 
 # Test Script -----------------------------------
 if __name__ == "__main__":
     # Create Fetcher object
-    test = Fetcher('https://sfbay.craigslist.org/search/cta?query=4Runner&srchType=T&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009')
-
-    # Print intial URL
-    print(test.get_url())
-
-    # Set new URL, print data. It should be empty
-    # test.set_url("")
-    print(test.get_url())
-
-    # Test HTTP request for HTML data response
-    test.set_url("https://sfbay.craigslist.org/search/cta?query=4Runner&srchType=T&min_price=678&max_price=7500&min_auto_year=2003&max_auto_year=2009&auto_drivetrain=3")
-    test.get_html_content()
-
-    # Test BS4 parser against byte content response
-    test.parse_html_content()
-
+    test = Fetcher('https://sfbay.craigslist.org/d/cars-trucks/search/cta?query=z06&sort=rel')
+    
     # Next
-    test.convert_html_to_json_meta()
+    print(test.convert_html_to_json_meta())
