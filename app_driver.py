@@ -13,6 +13,10 @@ def run_script(url, receiver_email, public_id):
     print("Retrieved new response at "+str(datetime.utcnow())+" for "+receiver_email)
     print("\n\n")
 
+    # Check json-store dir path
+    if not os.path.exists("json_store"):
+        os.makedirs("json_store")
+
     # Now verify the new data against the existing data
     file_path = "json_store/"+str(public_id)+".json"
     data_verifier = Verifier()
@@ -52,7 +56,7 @@ if __name__ == "__main__":
     ]
 
     for user in users:
-        schedule.every(2).minutes.do(run_script, user['url'], user['email'], user['public_id'])
+        schedule.every(5).minutes.do(run_script, user['url'], user['email'], user['public_id'])
     
     while True:
         schedule.run_pending()
