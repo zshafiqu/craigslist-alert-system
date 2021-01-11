@@ -61,7 +61,7 @@ class Sender:
 
 
 if __name__ == "__main__":
-
+    import os
     data = [
         {
             "post-id":"7259938926",
