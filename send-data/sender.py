@@ -52,10 +52,10 @@ class Sender:
                 server.sendmail(
                     self.sender_email, self.receiver_email, message.as_string()
                 )
-                return 200
-        
+                
+            return 200
         except Exception as e:
-            return 500
+            print(e)
 
 
 
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     receiver_email = os.environ.get('RECEIVER_EMAIL')
     password = os.environ.get('SENDER_PASS')
 
-    sender_test = Sender(sender_email, receiver_email, password)
+    sender_test = Sender(sender_email, password, receiver_email)
 
     print(sender_test.send_email(data))
 
