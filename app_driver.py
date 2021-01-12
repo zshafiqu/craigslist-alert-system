@@ -10,7 +10,8 @@ def run_script(sender_email, sender_pass, url, receiver_email, public_id):
     fetcher = Fetcher(url)
     new_data = fetcher.fetch_data()
     print("--------------------------------------------------")
-    print("Retrieved new response at "+str(datetime.utcnow())+" for "+receiver_email)
+    # print("Retrieved new response at "+str(datetime.utcnow())+" for "+receiver_email)
+    print("Retrieved new response for "+receiver_email)
     print("\n\n")
 
     # Check json-store dir path
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     ]
 
     for user in users:
-        schedule.every(5).minutes.do(run_script, sender_email, sender_pass, user['url'], user['email'], user['public_id'])
+        schedule.every(5).seconds.do(run_script, sender_email, sender_pass, user['url'], user['email'], user['public_id'])
     
     while True:
         schedule.run_pending()
