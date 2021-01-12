@@ -1,5 +1,6 @@
 # On-board data storage.. ignore plz
 json_store/
+script-logs.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
