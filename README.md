@@ -19,7 +19,8 @@ To get up and going –
 2. Install the dependencies
 3. Create a Gmail account to send the emails from
 4. Modify the main script with your emails, credentials, and URL
-5. run script
+5. Add your desired queries to query_list.json
+5. Run script & enjoy
     
 ```sh
 $ cd craigslist-alert-system
