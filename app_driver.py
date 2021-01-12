@@ -46,8 +46,9 @@ def run_script(sender_email, sender_pass, receiver_email, query_name, url):
     else:
         print("No new data.", file=f)
 
+    # Print iteration delimiter and close file descriptor
     print("--------------------------------------------------", file=f)
-    f.close()
+    f.close() 
 
 if __name__ == "__main__":
     sender_email = os.environ.get('SENDER_EMAIL')
