@@ -1,5 +1,4 @@
 # Craigslist Alert System
-__________________________________
 
 This Craigslist Alert System is a tool that will notify you anytime a new posting that matches your parameters appears, via email. Why not just use the pre-existing alert system? Well, it's not the best and can sometimes lead to missed listings. Using this ensures that you recieve notification of a listing as soon as possible, giving you full autonomy and customization. 
 
@@ -11,7 +10,6 @@ Some reasons to use this –
   - No need to rely on craigslist servers & latency issues
 
 ## Installation
-__________________________________
 
 This tool requires [Python](https://python.org/) to run. Any version >= 2.7 should do however there may be packages that require Python3+ as a minimum in the future.
 
@@ -28,7 +26,6 @@ $ python app.py
 ```
 
 ## File Structure Overview
-__________________________________
 
 ### fetch_data/fetcher.py 
 | Function(Parameters) | Return Value | Description |
@@ -54,7 +51,6 @@ __________________________________
 | **send_email(json_data):** | Status code, 2xx or 5xx | Sends structured JSON data to the receiver's email using the sender's credentials |
 
 ## License
-__________________________________
 
 Distributed under the MIT License. See LICENSE for more information.
 **Free Software, Hell Yeah!**
