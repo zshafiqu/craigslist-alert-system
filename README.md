@@ -4,10 +4,10 @@ This Craigslist Alert System is a tool that will notify you anytime a new postin
 
 Some reasons to use this –
 
-  - Run the script locally or on the cloud
-  - Modify it to suit your needs
-  - Be the first to see new listings (ex, PS5 for less than $600)
-  - No need to rely on craigslist servers & latency issues
+- Run the script locally or on the cloud
+- Modify it to suit your needs
+- Be the first to see new listings (ex, PS5 for less than $600)
+- No need to rely on craigslist servers & latency issues
 
 ## Installation
 
@@ -15,10 +15,11 @@ This tool requires [Python](https://python.org/) to run. Any version >= 2.7 shou
 
 To get up and going –
 
-    - Launch a virtual environment (optional)
-    - Install the dependencies
-    - Create a Gmail account to send the emails from
-    - Modify the main script with your emails, credentials, and URL
+1. Launch a virtual environment (optional)
+2. Install the dependencies
+3. Create a Gmail account to send the emails from
+4. Modify the main script with your emails, credentials, and URL
+5. run script
     
 ```sh
 $ cd craigslist-alert-system
