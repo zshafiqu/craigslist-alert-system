@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     for query in queries:
         schedule.every(2).minutes.do(
-            run_script, sender_email, sender_pass, query['url'], query['email'], query['public_id']
+            run_script, sender_email, sender_pass, query['url'], query['email'], query['public_id'], query['query_name']
             )
     
     while True:

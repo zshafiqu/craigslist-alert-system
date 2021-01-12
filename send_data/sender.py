@@ -6,14 +6,14 @@ class Sender:
         self.receiver_email = receiver_email
         return None
 
-    def send_email(self, json_data):
+    def send_email(self, query_name, json_data):
         import smtplib, ssl, jinja2
         from email.mime.text import MIMEText
         from email.mime.multipart import MIMEMultipart
 
         # Create message object to be sent in email
         message = MIMEMultipart("alternative")
-        message["Subject"] = "Zain's Craigslist Alerts - New Listings!"
+        message["Subject"] = str(query_name)+" - New Listings!"
         message["From"] = self.sender_email
         message["To"] = self.receiver_email
 
