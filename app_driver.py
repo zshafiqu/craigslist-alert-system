@@ -44,6 +44,11 @@ def run_script(sender_email, sender_pass, url, receiver_email, public_id):
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
+    '''
+    Use linux screen to manage background scripts on ec2 centOS ... 
+    see https://stackoverflow.com/questions/23166158/make-python-script-to-run-forever-on-amazon-ec2
+    '''
+    
     sender_email = str(os.environ.get('SENDER_EMAIL'))
     sender_pass = str(os.environ.get('SENDER_PASS'))
 
