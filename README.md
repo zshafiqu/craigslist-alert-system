@@ -14,10 +14,11 @@ Some reasons to use this –
 This tool requires [Python](https://python.org/) to run. Any version >= 2.7 should do however there may be packages that require Python3+ as a minimum in the future.
 
 To get up and going –
-    1. Launch a virtual environment (optional)
-    2. Install the dependencies
-    3. Create a Gmail account to send the emails from
-    4. Modify the main script with your emails, credentials, and URL
+
+    - Launch a virtual environment (optional)
+    - Install the dependencies
+    - Create a Gmail account to send the emails from
+    - Modify the main script with your emails, credentials, and URL
     
 ```sh
 $ cd craigslist-alert-system
