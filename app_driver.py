@@ -3,15 +3,15 @@ from verify_data.verifier import Verifier
 from send_data.sender import Sender
 import os, schedule, time, uuid
 
-
-def run_script(sender_email, sender_pass, url, receiver_email, public_id, query_name):
+def run_script(sender_email, sender_pass, receiver_email, query_name, url):
     # First create a fetcher object to grab the data
-    from datetime import datetime
+    from datetime import datetime,timezone
     fetcher = Fetcher(url)
     new_data = fetcher.fetch_data()
+    curr_utc_time = datetime.now(timezone.utc)
+
     print("--------------------------------------------------")
-    # print("Retrieved new response at "+str(datetime.utcnow())+" for "+receiver_email)
-    # print("Retrieved new response for "+receiver_email)
+    print("Retrieved new response for '"+query_name+"' at "+str(curr_utc_time))
     print("\n\n")
 
     # Check json-store dir path
@@ -19,7 +19,7 @@ def run_script(sender_email, sender_pass, url, receiver_email, public_id, query_
         os.makedirs("json_store")
 
     # Now verify the new data against the existing data
-    file_path = "json_store/"+str(public_id)+".json"
+    file_path = "json_store/"+query_name+".json"
     data_verifier = Verifier()
     existing_data = data_verifier.get_data_from_file(file_path)
     unseen_items = data_verifier.filter_new_items(existing_data, new_data)
@@ -51,63 +51,16 @@ if __name__ == "__main__":
     https://askubuntu.com/questions/356006/kill-a-screen-session
 
     '''
-    queries = [
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "4th gen 4Runner 4WD, max price $8,999",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=8999&min_auto_year=2003&max_auto_year=2009&min_auto_miles=NaN&auto_drivetrain=3&auto_title_status=1"
-        },
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "4th gen 4 Runner 4WD, max price $8,999",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=4+runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=8999&min_auto_year=2003&max_auto_year=2009&min_auto_miles=NaN&auto_drivetrain=3&auto_title_status=1"
-        },
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "3rd gen 4Runner 4WD, max price $5,500",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=5500&min_auto_year=2000&max_auto_year=2002&auto_drivetrain=3&auto_title_status=1"
-        },
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "3rd gen 4 Runner 4WD, max price $5,500",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=4+runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=5500&min_auto_year=2000&max_auto_year=2002&auto_drivetrain=3&auto_title_status=1"
-        },
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "rx350, max price $6,000",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=rx350&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
-        },
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "rx 350, max price $6,000",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=rx+350&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
-        },
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "rx330, max price $6,000",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=rx330&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
-        },
-        {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
-            "query_name" : "rx 330, max price $6,000",
-            "public_id" : uuid.uuid4(),
-            "url" : "https://sfbay.craigslist.org/search/cta?query=rx+330&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
-        },
-    ]
-
     sender_email = os.environ.get('SENDER_EMAIL')
     sender_pass = os.environ.get('SENDER_PASS')
+    receiver_email = os.environ.get('RECEIVER_EMAIL')
+    
+    reader = Verifier()
+    queries = reader.get_data_from_file("query_list.json")
 
     for query in queries:
-        schedule.every(10).seconds.do(
-            run_script, sender_email, sender_pass, query['url'], query['email'], query['public_id'], query['query_name']
+        schedule.every(2).seconds.do(
+            run_script, sender_email, sender_pass, receiver_email, query['query_name'], query['url']
             )
     
     while True:
