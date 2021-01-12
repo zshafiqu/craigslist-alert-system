@@ -47,6 +47,9 @@ if __name__ == "__main__":
     '''
     Use linux screen to manage background scripts on ec2 centOS ... 
     see https://stackoverflow.com/questions/23166158/make-python-script-to-run-forever-on-amazon-ec2
+    https://stackoverflow.com/questions/537942/how-to-list-running-screen-sessions
+    https://askubuntu.com/questions/356006/kill-a-screen-session
+
     '''
     
     sender_email = str(os.environ.get('SENDER_EMAIL'))
