@@ -106,7 +106,7 @@ if __name__ == "__main__":
     sender_pass = os.environ.get('SENDER_PASS')
 
     for query in queries:
-        schedule.every(2).minutes.do(
+        schedule.every(10).seconds.do(
             run_script, sender_email, sender_pass, query['url'], query['email'], query['public_id'], query['query_name']
             )
     
