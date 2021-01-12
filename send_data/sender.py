@@ -51,4 +51,5 @@ class Sender:
                 server.sendmail(self.sender_email, self.receiver_email, message.as_string())
             return 200
         except Exception as e:
+            print(e)
             return 500
