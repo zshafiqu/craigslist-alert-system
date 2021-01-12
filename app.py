@@ -4,7 +4,7 @@ from send_data.sender import Sender
 import os, schedule, time, uuid
 
 
-def run_script(url, receiver_email, public_id):
+def run_script(sender_email, sender_pass, url, receiver_email, public_id):
     # First create a fetcher object to grab the data
     from datetime import datetime
     fetcher = Fetcher(url)
@@ -32,9 +32,6 @@ def run_script(url, receiver_email, public_id):
         data_verifier.write_to_json_file(new_data, file_path)
 
         # and then email the unseen items
-        sender_email = os.environ.get('SENDER_EMAIL')
-        sender_pass = os.environ.get('SENDER_PASS')
-
         print("Sending email now...")
         sender = Sender(sender_email, sender_pass, receiver_email)
         if sender.send_email(unseen_items) != 200:
@@ -46,6 +43,8 @@ def run_script(url, receiver_email, public_id):
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
+    sender_email = os.environ.get('SENDER_EMAIL')
+    sender_pass = os.environ.get('SENDER_PASS')
 
     users = [
         {
@@ -56,7 +55,7 @@ if __name__ == "__main__":
     ]
 
     for user in users:
-        schedule.every(5).minutes.do(run_script, user['url'], user['email'], user['public_id'])
+        schedule.every(5).minutes.do(run_script, sender_email, sender_pass, user['url'], user['email'], user['public_id'])
     
     while True:
         schedule.run_pending()
