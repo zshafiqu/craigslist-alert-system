@@ -51,41 +51,64 @@ if __name__ == "__main__":
     https://askubuntu.com/questions/356006/kill-a-screen-session
 
     '''
-    
-    sender_email = str(os.environ.get('SENDER_EMAIL'))
-    sender_pass = str(os.environ.get('SENDER_PASS'))
-
-    users = [
+    queries = [
         {
-            "email" : str(os.environ.get('RECEIVER_EMAIL')),
-            "query_name" : "4Runner",
-            "public_id" : str(uuid.uuid4()),
-            "url" : "https://slo.craigslist.org/search/cta?query=4runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=104&nearbyArea=7&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=103&nearbyArea=209&nearbyArea=92&nearbyArea=12&nearbyArea=8&nearbyArea=62&nearbyArea=710&nearbyArea=1&nearbyArea=97&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=500&max_price=7500&min_auto_year=2000&max_auto_year=2009&auto_drivetrain=3&auto_title_status=1"
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "4th gen 4Runner 4WD, max price $8,999",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=8999&min_auto_year=2003&max_auto_year=2009&min_auto_miles=NaN&auto_drivetrain=3&auto_title_status=1"
         },
         {
-            "email" : str(os.environ.get('RECEIVER_EMAIL')),
-            "query_name" : "4 Runner",
-            "public_id" : str(uuid.uuid4()),
-            "url" : "https://slo.craigslist.org/search/cta?query=4+runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=104&nearbyArea=7&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=103&nearbyArea=209&nearbyArea=92&nearbyArea=12&nearbyArea=8&nearbyArea=62&nearbyArea=710&nearbyArea=1&nearbyArea=97&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=500&max_price=7500&min_auto_year=2000&max_auto_year=2009&auto_drivetrain=3&auto_title_status=1"
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "4th gen 4 Runner 4WD, max price $8,999",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=4+runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=8999&min_auto_year=2003&max_auto_year=2009&min_auto_miles=NaN&auto_drivetrain=3&auto_title_status=1"
         },
         {
-            "email" : str(os.environ.get('RECEIVER_EMAIL')),
-            "query_name" : "rx350",
-            "public_id" : str(uuid.uuid4()),
-            "url" : "https://slo.craigslist.org/search/cta?query=rx350&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=104&nearbyArea=7&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=103&nearbyArea=209&nearbyArea=92&nearbyArea=12&nearbyArea=8&nearbyArea=62&nearbyArea=710&nearbyArea=1&nearbyArea=97&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=500&max_price=7500&auto_title_status=1"
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "3rd gen 4Runner 4WD, max price $5,500",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=4runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=5500&min_auto_year=2000&max_auto_year=2002&auto_drivetrain=3&auto_title_status=1"
         },
-
-                {
-            "email" : str(os.environ.get('RECEIVER_EMAIL')),
-            "query_name" : "rx 350",
-            "public_id" : str(uuid.uuid4()),
-            "url" : "https://slo.craigslist.org/search/cta?query=rx+350&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=104&nearbyArea=7&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=103&nearbyArea=209&nearbyArea=92&nearbyArea=12&nearbyArea=8&nearbyArea=62&nearbyArea=710&nearbyArea=1&nearbyArea=97&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=500&max_price=7500&auto_title_status=1"
+        {
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "3rd gen 4 Runner 4WD, max price $5,500",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=4+runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=5500&min_auto_year=2000&max_auto_year=2002&auto_drivetrain=3&auto_title_status=1"
         },
-
+        {
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "rx350, max price $6,000",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=rx350&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
+        },
+        {
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "rx 350, max price $6,000",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=rx+350&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
+        },
+        {
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "rx330, max price $6,000",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=rx330&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
+        },
+        {
+            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "query_name" : "rx 330, max price $6,000",
+            "public_id" : uuid.uuid4(),
+            "url" : "https://sfbay.craigslist.org/search/cta?query=rx+330&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=187&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=189&nearbyArea=454&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=92&nearbyArea=12&nearbyArea=191&nearbyArea=62&nearbyArea=710&nearbyArea=708&nearbyArea=97&nearbyArea=707&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=1000&max_price=6000&auto_title_status=1"
+        },
     ]
 
-    for user in users:
-        schedule.every(2).minutes.do(run_script, sender_email, sender_pass, user['url'], user['email'], user['public_id'])
+    sender_email = os.environ.get('SENDER_EMAIL')
+    sender_pass = os.environ.get('SENDER_PASS')
+
+    for query in queries:
+        schedule.every(2).minutes.do(
+            run_script, sender_email, sender_pass, query['url'], query['email'], query['public_id']
+            )
     
     while True:
         schedule.run_pending()
