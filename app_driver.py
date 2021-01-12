@@ -18,12 +18,13 @@ def run_script(sender_email, sender_pass, receiver_email, query_name, url):
     if not os.path.exists("json_store"):
         os.makedirs("json_store")
 
-    # Now verify the new data against the existing data
+    # Now verify the new data against the existing data .. see if there is anything we haven't seen yet.
     file_path = "json_store/"+query_name+".json"
     data_verifier = Verifier()
     existing_data = data_verifier.get_data_from_file(file_path)
     unseen_items = data_verifier.filter_new_items(existing_data, new_data)
 
+    # If there are some unseen items, process & email them ..!
     if unseen_items != []:
         print("Unseen data: ")
         print(unseen_items)
@@ -38,19 +39,14 @@ def run_script(sender_email, sender_pass, receiver_email, query_name, url):
         if sender.send_email(query_name, unseen_items) != 200:
             print("Email failed to send")
 
+    # If the unseen_items list is empty, that means the new response yielded no difference to the existing data .. so assume no new listings
     else:
         print("No new data.")
 
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    '''
-    Use linux screen to manage background scripts on ec2 centOS ... 
-    see https://stackoverflow.com/questions/23166158/make-python-script-to-run-forever-on-amazon-ec2
-    https://stackoverflow.com/questions/537942/how-to-list-running-screen-sessions
-    https://askubuntu.com/questions/356006/kill-a-screen-session
 
-    '''
     sender_email = os.environ.get('SENDER_EMAIL')
     sender_pass = os.environ.get('SENDER_PASS')
     receiver_email = os.environ.get('RECEIVER_EMAIL')
@@ -66,5 +62,12 @@ if __name__ == "__main__":
     while True:
         schedule.run_pending()
         time.sleep(1)
+
+    '''
+    Use linux screen to manage background scripts on ec2 centOS ... see :
+    - https://stackoverflow.com/questions/23166158/make-python-script-to-run-forever-on-amazon-ec2
+    - https://stackoverflow.com/questions/537942/how-to-list-running-screen-sessions
+    - https://askubuntu.com/questions/356006/kill-a-screen-session
+    '''
 
 
