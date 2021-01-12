@@ -1,18 +1,21 @@
 from fetch_data.fetcher import Fetcher
 from verify_data.verifier import Verifier
 from send_data.sender import Sender
-import os, schedule, time, uuid
+import os, schedule, time, uuid, sys
 
 def run_script(sender_email, sender_pass, receiver_email, query_name, url):
+    # Open output destination file descriptor to direct print statements to logfile
+    f = open("script-logs.txt", "a")
+
     # First create a fetcher object to grab the data
     from datetime import datetime,timezone
     fetcher = Fetcher(url)
     new_data = fetcher.fetch_data()
     curr_utc_time = datetime.now(timezone.utc)
 
-    print("--------------------------------------------------")
-    print("Retrieved new response for '"+query_name+"' at "+str(curr_utc_time))
-    print("\n\n")
+    print("--------------------------------------------------", file=f)
+    print("Retrieved new response for '"+query_name+"' at "+str(curr_utc_time), file=f)
+    print("\n\n", file=f)
 
     # Check json-store dir path
     if not os.path.exists("json_store"):
@@ -26,27 +29,27 @@ def run_script(sender_email, sender_pass, receiver_email, query_name, url):
 
     # If there are some unseen items, process & email them ..!
     if unseen_items != []:
-        print("Unseen data: ")
-        print(unseen_items)
-        print("\n\n")
+        print("Unseen data: ", file=f)
+        print(unseen_items, file=f)
+        print("\n\n", file=f)
 
         # Write the new data to the existing data-store
         data_verifier.write_to_json_file(new_data, file_path)
 
         # and then email the unseen items
-        print("Sending email now...")
+        print("Sending email now...", file=f)
         sender = Sender(sender_email, sender_pass, receiver_email)
         if sender.send_email(query_name, unseen_items) != 200:
-            print("Email failed to send")
+            print("Email failed to send", file=f)
 
     # If the unseen_items list is empty, that means the new response yielded no difference to the existing data .. so assume no new listings
     else:
-        print("No new data.")
+        print("No new data.", file=f)
 
-    print("--------------------------------------------------")
+    print("--------------------------------------------------", file=f)
+    f.close()
 
 if __name__ == "__main__":
-
     sender_email = os.environ.get('SENDER_EMAIL')
     sender_pass = os.environ.get('SENDER_PASS')
     receiver_email = os.environ.get('RECEIVER_EMAIL')
