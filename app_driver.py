@@ -11,7 +11,7 @@ def run_script(sender_email, sender_pass, url, receiver_email, public_id):
     new_data = fetcher.fetch_data()
     print("--------------------------------------------------")
     # print("Retrieved new response at "+str(datetime.utcnow())+" for "+receiver_email)
-    print("Retrieved new response for "+receiver_email)
+    # print("Retrieved new response for "+receiver_email)
     print("\n\n")
 
     # Check json-store dir path
@@ -44,12 +44,12 @@ def run_script(sender_email, sender_pass, url, receiver_email, public_id):
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    sender_email = os.environ.get('SENDER_EMAIL')
-    sender_pass = os.environ.get('SENDER_PASS')
+    sender_email = str(os.environ.get('SENDER_EMAIL'))
+    sender_pass = str(os.environ.get('SENDER_PASS'))
 
     users = [
         {
-            "email" : os.environ.get('RECEIVER_EMAIL'),
+            "email" : str(os.environ.get('RECEIVER_EMAIL')),
             "public_id" : str(uuid.uuid4()),
             "url" : "https://slo.craigslist.org/search/cta?query=4runner&srchType=T&searchNearby=2&nearbyArea=63&nearbyArea=43&nearbyArea=373&nearbyArea=709&nearbyArea=104&nearbyArea=7&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=103&nearbyArea=209&nearbyArea=92&nearbyArea=12&nearbyArea=8&nearbyArea=62&nearbyArea=710&nearbyArea=1&nearbyArea=97&nearbyArea=208&nearbyArea=346&nearbyArea=456&min_price=500&max_price=8500&min_auto_year=2000&max_auto_year=2009&auto_drivetrain=3&auto_title_status=1"
         },
