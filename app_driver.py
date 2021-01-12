@@ -58,7 +58,7 @@ if __name__ == "__main__":
     queries = reader.get_data_from_file("query_list.json")
 
     for query in queries:
-        schedule.every(2).seconds.do(
+        schedule.every(5).minutes.do(
             run_script, sender_email, sender_pass, receiver_email, query['query_name'], query['url']
             )
     
