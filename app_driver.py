@@ -4,7 +4,7 @@ from send_data.sender import Sender
 import os, schedule, time, uuid
 
 
-def run_script(sender_email, sender_pass, url, receiver_email, public_id):
+def run_script(sender_email, sender_pass, url, receiver_email, public_id, query_name):
     # First create a fetcher object to grab the data
     from datetime import datetime
     fetcher = Fetcher(url)
@@ -35,7 +35,7 @@ def run_script(sender_email, sender_pass, url, receiver_email, public_id):
         # and then email the unseen items
         print("Sending email now...")
         sender = Sender(sender_email, sender_pass, receiver_email)
-        if sender.send_email(unseen_items) != 200:
+        if sender.send_email(query_name, unseen_items) != 200:
             print("Email failed to send")
 
     else:
