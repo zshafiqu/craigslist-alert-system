@@ -54,18 +54,20 @@ if __name__ == "__main__":
 
     print("Gathering data...\n\n")
     sender_email = os.environ.get('SENDER_EMAIL')
-    sender_pass = os.environ.get('SENDER_PASS')    
+    sender_pass = os.environ.get('SENDER_PASS')
+    default_email = os.environ.get('RECEIVER_EMAIL')
     reader = Verifier()
     queries = reader.get_data_from_file("query_list.json")
 
     print("Scheduling tasks...\n\n")
     for query in queries:
+        # Use my email as default email . otherwise use receiver email provided in query_list.json
         if query['receiver_email'] == "":
-            receiver_email = os.environ.get('RECEIVER_EMAIL')
+            receiver_email = default_email
         else:
             receiver_email = query['receiver_email']
 
-        schedule.every(5).seconds.do(
+        schedule.every(2).minutes.do(
             run_script, sender_email, sender_pass, receiver_email, query['query_name'], query['url']
             )
     
