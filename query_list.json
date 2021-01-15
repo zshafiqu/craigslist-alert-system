@@ -2,7 +2,7 @@
     {
         "query_name" : "generic-search-0",
         "url" : "https://sfbay.craigslist.org/search/cta?query=%28%22Honda%22%7C%22Toyota%22%29&srchType=T&hasPic=1&searchNearby=2&nearbyArea=285&nearbyArea=96&nearbyArea=102&nearbyArea=188&nearbyArea=12&nearbyArea=97&nearbyArea=456&min_price=2000&max_price=3000&min_auto_year=2000&max_auto_miles=170000&auto_title_status=1&auto_transmission=2",
-        "receiver_email" : "zshafiqu@ucsc.edu"
+        "receiver_email" : ""
     },
     
     {
