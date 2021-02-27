@@ -25,7 +25,7 @@ To get up and going –
 ```sh
 $ cd craigslist-alert-system
 $ pip install -r requirements.txt
-$ python app.py
+$ sh constant_run.sh
 ```
 
 ## File Structure Overview
