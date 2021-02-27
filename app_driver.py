@@ -67,7 +67,7 @@ if __name__ == "__main__":
         else:
             receiver_email = query['receiver_email']
 
-        schedule.every(5).seconds.do(
+        schedule.every(2).minutes.do(
             run_script, sender_email, sender_pass, receiver_email, query['query_name'], query['url']
             )
     
