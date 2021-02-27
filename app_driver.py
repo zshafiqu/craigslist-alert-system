@@ -1,6 +1,6 @@
-from fetch_data.fetcher import Fetcher
-from verify_data.verifier import Verifier
-from send_data.sender import Sender
+from lib.fetch_data.fetcher import Fetcher
+from lib.verify_data.verifier import Verifier
+from lib.send_data.sender import Sender
 import os, schedule, time, uuid, sys
 
 def run_script(sender_email, sender_pass, receiver_email, query_name, url):
@@ -67,7 +67,7 @@ if __name__ == "__main__":
         else:
             receiver_email = query['receiver_email']
 
-        schedule.every(2).minutes.do(
+        schedule.every(2).seconds.do(
             run_script, sender_email, sender_pass, receiver_email, query['query_name'], query['url']
             )
     
