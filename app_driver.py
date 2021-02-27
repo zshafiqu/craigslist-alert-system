@@ -5,7 +5,7 @@ import os, schedule, time, uuid, sys
 
 def run_script(sender_email, sender_pass, receiver_email, query_name, url):
     # Open output destination file descriptor to direct print statements to logfile
-    f = open("script-logs.txt", "a")
+    f = open("./misc/python-script-logs.txt", "a")
 
     # First create a fetcher object to grab the data
     from datetime import datetime,timezone
@@ -18,11 +18,11 @@ def run_script(sender_email, sender_pass, receiver_email, query_name, url):
     print("\n\n", file=f)
 
     # Check json-store dir path
-    if not os.path.exists("json_store"):
-        os.makedirs("json_store")
+    if not os.path.exists("./misc/viewed_vehicle_data"):
+        os.makedirs("./misc/viewed_vehicle_data")
 
     # Now verify the new data against the existing data .. see if there is anything we haven't seen yet.
-    file_path = "json_store/"+query_name+".json"
+    file_path = "./misc/viewed_vehicle_data/"+query_name+".json"
     data_verifier = Verifier()
     existing_data = data_verifier.get_data_from_file(file_path)
     unseen_items = data_verifier.filter_new_items(existing_data, new_data)
@@ -71,7 +71,7 @@ if __name__ == "__main__":
             run_script, sender_email, sender_pass, receiver_email, query['query_name'], query['url']
             )
     
-    print("Script starting... Please see 'script-logs.txt' for futher program output.\n\n")
+    print("Script starting... Please see 'misc/python-script-logs.txt' for futher program output.\n\n")
     while True:
         schedule.run_pending()
         time.sleep(1)

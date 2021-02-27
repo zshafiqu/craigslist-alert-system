@@ -1,6 +1,5 @@
 # On-board data storage.. ignore plz
-json_store/
-script-logs.txt
+/misc
 .DS_store
 
 # Byte-compiled / optimized / DLL files
