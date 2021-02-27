@@ -1,11 +1,8 @@
 #!/bin/sh
 # Shell script to re-run python script if it stops for whatever reason
 
-COMMAND='python3 app_driver.py'
+COMMAND="python3 app_driver.py"
 LOGFILE=./misc/shell-script-logs.txt
-
-# If the script fails, move the python script logs to an old folder and denote them by the date the script failed
-MOVECOMMAND = 'mv ./misc/python-script-logs.txt ./misc/old_logs/python-script-logs-ending-${}.txt'
 
 writelog() {
   now=`date`
@@ -14,8 +11,11 @@ writelog() {
 
 moveoldscript() {
     # If the script fails, move the python script logs to an old folder and denote them by the date the script failed
-    curr=`date`
-    MOVECOMMAND = 'mv ./misc/python-script-logs.txt ./misc/old_logs/python-script-logs-ending-${curr}.txt'
+    curr=`date +%Y-%m-%d.%H:%M:%S`
+    MOVECOMMAND="mv ./misc/python-script-logs.txt ./misc/old_python_logs/faildate-$curr.txt"
+    # -p flag denotes make dir if doesn't exist otherwise continue ...
+    MAKELOGDIR="mkdir -p ./misc/old_python_logs"
+    $MAKELOGDIR
     $MOVECOMMAND
 }
 
