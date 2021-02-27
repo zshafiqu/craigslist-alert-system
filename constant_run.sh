@@ -1,6 +1,6 @@
 #!/bin/sh
 # Shell script to re-run python script if it stops for whatever reason
-
+mkdir -p ./misc
 COMMAND="python3 app_driver.py"
 LOGFILE=./misc/shell-script-logs.txt
 
